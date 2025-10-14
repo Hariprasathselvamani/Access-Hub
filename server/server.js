@@ -11,19 +11,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  
   "https://access-hub-frontend.onrender.com",
+  "http://localhost:5173",
 ].filter(Boolean);
 app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin like curl/postman
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = `CORS policy does not allow access from ${origin}`;
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
+  origin : allowedOrigins,
   credentials: true
 }));
 
