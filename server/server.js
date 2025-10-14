@@ -11,7 +11,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "https://access-hub-frontend.onrender.com",
 ].filter(Boolean);
 app.use(cors({
   origin: function(origin, callback) {
