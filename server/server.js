@@ -13,12 +13,18 @@ app.use(cookieParser());
 const allowedOrigins = [
   process.env.FRONTEND_URL,
 ].filter(Boolean);
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-); // adjust frontend URL
+app.use(cors({
+  origin: function(origin, callback) {
+    // allow requests with no origin like curl/postman
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `CORS policy does not allow access from ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
 
 app.get("/", (req, res) => res.send("API Working"));
 
