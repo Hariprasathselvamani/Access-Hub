@@ -44,6 +44,13 @@ export const register = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+     await transporter.sendMail({
+      from: process.env.SENDER_EMAIL,
+      to: user.email,
+      subject: "Welcome to AccessHub",
+      text: `Welcome to AccessHub website. Your account has be created with email id: ${email}`
+    });
+
     res.json({
       success: true,
       message: "User registered successfully",
